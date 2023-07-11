@@ -3,6 +3,7 @@ const app = express();
 const port = 3000;
 const USERS = [];
 const QUESTIONS = [];
+const SUBMISSIONS = [];
 
 app.set("view-engine", "ejs");
 app.use(express.urlencoded({ extended: true }));
@@ -105,10 +106,18 @@ app.post("/addQuestion", (req, res) => {
 });
 
 // submissions
-
+app.get("/submissions", (req, res) => {
+  // get the question id from the query params
+  // render an ejs file that will show all the previous submissions for that particular question id in a template
+});
 // get all the submisstions from the SUBMISSIONS array
 
 // submit
+app.post("/submissions", (req, res) => {
+  // get the question id from the query params
+  // randomly accept or reject the submission
+  // add it to the SUBMISSIONS array with the question id
+});
 
 // randomly accept or reject a submission
 // store a new submission in the SUBMISSION array
