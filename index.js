@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const port = 3000;
 const USERS = [];
+const QUESTIONS = [];
 
 app.set("view-engine", "ejs");
 app.use(express.urlencoded({ extended: true }));
@@ -91,7 +92,16 @@ app.post("/login", (req, res) => {
 
 // problems
 app.get("/problems", (req, res) => {
-  res.render("problems.ejs");
+  res.render("problems.ejs", { probs: QUESTIONS });
+});
+
+app.post("/addQuestion", (req, res) => {
+  QUESTIONS.push({
+    id: req.body.id,
+    title: req.body.title,
+    description: req.body.description,
+    testCases: req.body.testCases,
+  });
 });
 
 // submissions

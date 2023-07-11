@@ -7,5 +7,16 @@
   </head>
   <body>
     <h1>Here all the problems will go</h1>
+    <ul>
+      <% for(let i = 0; i < probs.length; i++) { %>
+      <li>
+        <div>
+          <p>id: <%= probs[i].id %></p>
+          <p>title: <%= probs[i].title %></p>
+          <p>description: <%= probs[i].description %></p>
+        </div>
+      </li>
+      <% } %>
+    </ul>
   </body>
 </html>
