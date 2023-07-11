@@ -3,6 +3,7 @@ const app = express();
 const port = 3000;
 const USERS = [];
 
+app.set("view-engine", "ejs");
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.get("/", (req, res) => {
@@ -17,17 +18,46 @@ app.get("/", (req, res) => {
 // return an access token ( just a simple string for now would do the job )
 // return 200 status code back to the client
 
-app.post("/signup", (req, res) => {
-  USERS.push({ email: req.body.email, password: req.body.password });
-  console.log(USERS);
-  res.redirect("/");
+// page to sign up as a new user
+app.get("/signup", (req, res) => {
+  res.render("signup.ejs", {});
 });
+// congrats page for successful sign ups
+app.get("/signup/success", (req, res) => {
+  res.render("signup-success.ejs", { users: USERS });
+});
+// endpoint to hit when trying to singup
+app.post("/signup", (req, res) => {
+  let exists = false;
+  USERS.forEach((acc) => {
+    if (acc.email === req.body.email) {
+      exists = true;
+    }
+  });
+  if (!exists) {
+    USERS.push({
+      username: req.body.username,
+      email: req.body.email,
+      password: req.body.password,
+    });
+    res.redirect("/signup/success");
+  } else {
+    res.redirect("/signup");
+  }
+  console.log(USERS);
+});
+
 // login
 
 // decode the body and get the user email and password
 // check if the email exists in the USERS array
 // also ensure that the password is the same
 // if the user exist in the USERS array then return a 200 status code
+
+app.post("/login", (req, res) => {
+  res.send("Hello from the login page");
+});
+
 // problems
 
 // submissions
