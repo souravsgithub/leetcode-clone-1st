@@ -44,7 +44,6 @@ app.post("/signup", (req, res) => {
   } else {
     res.redirect("/signup");
   }
-  console.log(USERS);
 });
 
 // login
@@ -53,12 +52,47 @@ app.post("/signup", (req, res) => {
 // check if the email exists in the USERS array
 // also ensure that the password is the same
 // if the user exist in the USERS array then return a 200 status code
+app.get("/login", (req, res) => {
+  res.render("login.ejs");
+});
 
 app.post("/login", (req, res) => {
-  res.send("Hello from the login page");
+  let exists = false;
+  let correctCredentials = false;
+  USERS.forEach((account) => {
+    if (
+      account.email === req.body.email &&
+      account.password === req.body.password
+    ) {
+      exists = true;
+      correctCredentials = true;
+    } else if (
+      account.email === req.body.email ||
+      account.password === req.body.password
+    ) {
+      exists = true;
+    }
+  });
+  if (exists && correctCredentials) {
+    // redirect to the main page
+    res.redirect("/problems");
+  } else if (exists) {
+    // tell them the entered email or password is incorrect
+    console.log(
+      "Your entered email or password is incorrect! Please try again!"
+    );
+    res.redirect("/login");
+  } else {
+    // need to create an account becuase they don't have one
+    console.log("You don't have an account! Please sign up to create one.");
+    res.redirect("/signup");
+  }
 });
 
 // problems
+app.get("/problems", (req, res) => {
+  res.render("problems.ejs");
+});
 
 // submissions
 
