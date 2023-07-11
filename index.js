@@ -1,10 +1,12 @@
 const express = require("express");
 const app = express();
 const port = 3000;
-
 const USERS = [];
+
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 app.get("/", (req, res) => {
-  res.send("Hello from leetcode backend");
+  res.sendFile(__dirname + "/index.html");
 });
 
 // functionalities I want in my app for now
@@ -16,7 +18,9 @@ app.get("/", (req, res) => {
 // return 200 status code back to the client
 
 app.post("/signup", (req, res) => {
-  res.send("Hello from the signup route");
+  USERS.push({ email: req.body.email, password: req.body.password });
+  console.log(USERS);
+  res.redirect("/");
 });
 // login
 
