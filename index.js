@@ -15,8 +15,8 @@ app.get("/", (req, res) => {
 // return an access token ( just a simple string for now would do the job )
 // return 200 status code back to the client
 
-app.post("/signup", (req, res) {
-    res.send("Hello from the signup route");
+app.post("/signup", (req, res) => {
+  res.send("Hello from the signup route");
 });
 // login
 
