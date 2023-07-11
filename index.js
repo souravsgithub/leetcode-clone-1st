@@ -31,16 +31,17 @@ app.get("/signup/success", (req, res) => {
 // endpoint to hit when trying to singup
 app.post("/signup", (req, res) => {
   let exists = false;
+  const { email, password, username } = req.body;
   USERS.forEach((acc) => {
-    if (acc.email === req.body.email) {
+    if (acc.email === email) {
       exists = true;
     }
   });
   if (!exists) {
     USERS.push({
-      username: req.body.username,
-      email: req.body.email,
-      password: req.body.password,
+      username,
+      email,
+      password,
     });
     res.redirect("/signup/success");
   } else {
@@ -61,20 +62,17 @@ app.get("/login", (req, res) => {
 app.post("/login", (req, res) => {
   let exists = false;
   let correctCredentials = false;
-  USERS.forEach((account) => {
-    if (
-      account.email === req.body.email &&
-      account.password === req.body.password
-    ) {
+  const { email, password } = req.body;
+
+  USERS.forEach((acc) => {
+    if (acc.email === email && acc.password === password) {
       exists = true;
       correctCredentials = true;
-    } else if (
-      account.email === req.body.email ||
-      account.password === req.body.password
-    ) {
+    } else if (acc.email === email || acc.password === password) {
       exists = true;
     }
   });
+
   if (exists && correctCredentials) {
     // redirect to the main page
     res.redirect("/problems");
@@ -97,11 +95,12 @@ app.get("/problems", (req, res) => {
 });
 
 app.post("/addQuestion", (req, res) => {
+  const { id, title, description, testCases } = req.body;
   QUESTIONS.push({
-    id: req.body.id,
-    title: req.body.title,
-    description: req.body.description,
-    testCases: req.body.testCases,
+    id,
+    title,
+    description,
+    testCases,
   });
 });
 
